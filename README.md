@@ -1,6 +1,6 @@
 # George Kamande's Portfolio 🌐
 
-Welcome to my personal portfolio website! This project showcases who I am, what I do, and what I’ve built so far. It's a central hub where you can learn more about my skills, education, experience, and passion for software engineering and cybersecurity.
+Welcome to my personal portfolio website! This project showcases who I am, what I do, and what I’ve built so far. It's a central hub where you can learn more about my skills, education, experience, and passion for software engineering.
 
 ## 🚀 About Me
 

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #000000;
+            transition: color 0.3s ease;
+        }
+        body.dark-mode {
+            color: #d1d1d1;
+        }
+        body.light-mode {
+            color: #1a1a1a;
+        }
+        .nav-link {
+            position: relative;
+            color: #d1d1d1; /* Default visible color in dark mode */
+            transition: color 0.3s ease;
+        }
+        body.light-mode .nav-link {
+            color: #1a1a1a;
+        }
+        .nav-link:hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        body.dark-mode .nav-link:hover::after {
+            background-color: #00d4ff;
+        }
+        body.light-mode .nav-link:hover::after {
+            background-color: #ff4d94;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        body.dark-mode .form-input {
+            background-color: rgba(30, 30, 30, 0.9);
+            border-color: #3a3a3a;
+            color: #d1d1d1;
+        }
+        body.light-mode .form-input {
+            background-color: rgba(211, 211, 211, 0.9); /* Medium gray shade */
+            border-color: #a9a9a9;
+            color: #1a1a1a;
+        }
+        .form-input:focus {
+            box-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+        }
+        body.dark-mode .form-input:focus {
+            border-color: #00d4ff;
+        }
+        body.light-mode .form-input:focus {
+            border-color: #ff4d94;
+        }
+        .content-overlay {
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        body.dark-mode .content-overlay {
+            background: rgba(30, 30, 30, 0.85);
+        }
+        body.light-mode .content-overlay {
+            background: rgba(211, 211, 211, 0.85); /* Medium gray shade */
+        }
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark-mode .toggle-btn {
+            background-color: #1a1a1a;
+            color: #00d4ff;
+        }
+        body.light-mode .toggle-btn {
+            background-color: #f0f0f0;
+            color: #ff4d94;
+        }
+        .toggle-btn:hover {
+            opacity: 0.9;
+        }
+        .toggle-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        .video-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px; /* Space around the video */
+  background-color: black;
+}
+
+.video-wrapper {
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+  background: black;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+video {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+    </style>
+</head>
+<body class="dark-mode font-sans">
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="toggle-btn">
+        <svg id="theme-icon" class="toggle-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm0 17a1 1 0 011 1v1a1 1 0 01-2 0v-1a1 1 0 011-1zm-8.66-5.66a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zm14.31 0a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zM3 12a1 1 0 01-1-1H1a1 1 0 012 0zm19 0a1 1 0 01-1-1h-1a1 1 0 012 0zm-5.66 5.66a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zm-8.31-12a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM12 6a6 6 0 100 12 6 6 0 000-12z"/>
+        </svg>
+        <span id="theme-text">light mode</span>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="bg-gray-950 shadow-md fixed w-full top-0 z-10"> 
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-dark-neon-blue light-mode:text-light-neon-blue">George Kamande</h1>
+            <ul class="flex space-x-6">
+                <li><a href="#home" class="nav-link hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">Home</a></li>
+                <li><a href="#about" class="nav-link hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">About</a></li>
+                <li><a href="#experience" class="nav-link hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">Experience</a></li>
+                <li><a href="#projects" class="nav-link hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">Projects</a></li>
+                <li><a href="#contact" class="nav-link hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Home Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center">
+        <div class="container mx-auto px-4 text-center fade-in">
+            <img src="portrait.jpg" alt="portfolio potrait" class="portfolio-img mx-auto mb-6 w-40 h-40 object-cover" style="border-radius:50px; border: 3px solid #2b92ac;">
+            <h2 class="text-5xl font-bold mb-4 text-dark-neon-blue light-mode:text-light-neon-blue">George Kamande</h2>
+            <h3 class="text-2xl mb-6 text-dark-neon-magenta light-mode:text-light-neon-magenta">Front-End Developer</h3>
+            <p class="text-lg mb-6 text-gray-400 light-mode:text-gray-700 max-w-2xl mx-auto">A Front-End Developer currently enrolled in the ALX Africa program, a leading tech learning initiative based in Nairobi, Kenya. He is also pursuing a Bachelor's degree in Software Engineering at Kirinyaga University in Kutus, Kenya. George is passionate about building affordable web applications and websites for small and mid-sized organizations across Africa and globally. He aims to become a Full Stack Developer and an expert in the field within the next five years. His long-term goal is to work at top tech companies like Google, Microsoft, or Amazon. George also aspires to graduate among the top 3% of his class in 2027.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16">
+        <div class="container mx-auto px-4 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-dark-neon-magenta light-mode:text-light-neon-magenta">About</h2>
+            <div class="max-w-2xl content-overlay">
+                <p class="text-lg mb-4 text-gray-400 light-mode:text-gray-700">George Kamande is a Front-End Developer currently enrolled in the ALX Africa program, a leading tech learning initiative based in Nairobi, Kenya. He is also pursuing a Bachelor's degree in Software Engineering at Kirinyaga University in Kutus, Kenya. George is passionate about building affordable web applications and websites for small and mid-sized organizations across Africa and globally. He aims to become a Full Stack Developer and an expert in the field within the next five years. His long-term goal is to work at top tech companies like Google, Microsoft, or Amazon. George also aspires to graduate among the top 3% of his class in 2027</p>
+                <p class="text-lg text-gray-400 light-mode:text-gray-700">"In my spare time, I explore in online tech communities"]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-16">
+        <div class="container mx-auto px-4 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-dark-neon-lime light-mode:text-light-neon-lime">Experience</h2>
+            <div class="max-w-2xl content-overlay">
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-gray-200 light-mode:text-gray-800">Aspiring Front-End Engineer, Accessibility</h4>
+                    <p class="text-gray-500 light-mode:text-gray-600"> 2025 - Present</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-400 light-mode:text-gray-700">
+                        <li>Gold Motors Kenya (Demo Site)</li>
+                        <li>Built and maintained critical components using HTML,CSS and JavaScript</li>
+                        <li>Ensured web accessibility standards (WCAG) across platforms.
+                         Designed and developed a car dealership website as a personal project to simulate operations of a real-world car sales company.
+                         Emphasized responsive design and clear UI/UX for mobile and desktop users.   
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-gray-200 light-mode:text-gray-800">2025 - Present</h4>
+                    <p class="text-gray-500 light-mode:text-gray-600">Alx Africa Front-End Developer</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-400 light-mode:text-gray-700">
+                        <li>Led development of responsive web applications using JavaScript and React.</li>
+                        <li>Collaborated with cross-functional teams to deliver scalable solutions.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <section class="video-section">
+  <div class="video-wrapper">
+      <iframe src="https://drive.google.com/file/d/1bq2Om2ntvXZh0LKkviBfhfhWNInW0drp/view?usp=sharing" allowfullscreen></iframe>
+  </div>
+</section>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16">
+        <div class="container mx-auto px-4 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-dark-neon-blue light-mode:text-light-neon-blue">Projects</h2>
+            <div class="max-w-2xl content-overlay">
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-gray-200 light-mode:text-gray-800">Gold Motors Kenya("Demo site")</h4>
+                    <p class="text-gray-400 light-mode:text-gray-700">A surrealist-inspired portfolio showcasing front-end skills using HTML, CSS, and JavaScript.</p>
+                    <div class="mt-2 flex space-x-4">
+                        <a href="#" class="text-dark-neon-lime hover:text-dark-neon-magenta light-mode:text-light-neon-lime light-mode:hover:text-light-neon-magenta transition-colors">GitHub</a>
+                        <a href="#" class="text-dark-neon-lime hover:text-dark-neon-magenta light-mode:text-light-neon-lime light-mode:hover:text-light-neon-magenta transition-colors">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4 fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-dark-neon-magenta light-mode:text-light-neon-magenta">Contact Me</h2>
+            <div class="max-w-lg mx-auto content-overlay">
+                <div class="space-y-4">
+                    <input type="text" id="name" placeholder="Your Name" class="w-full p-3 border rounded-md form-input" required>
+                    <input type="email" id="email" placeholder="Your Email" class="w-full p-3 border rounded-md form-input" required>
+                    <textarea id="message" placeholder="Your Message" class="w-full p-3 border rounded-md form-input" rows="5" required></textarea>
+                    <button id="submit-btn" class="bg-dark-neon-lime text-gray-900 light-mode:bg-light-neon-lime light-mode:text-gray-900 px-6 py-3 rounded-full w-full hover:bg-dark-neon-blue light-mode:hover:bg-light-neon-blue transition-colors hover-scale">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="bg-black py-8 px-6">
+    <div class="max-w-7xl mx-auto">
+        <p class="text-white text-2xl md:text-3xl font-semibold tracking-wide text-left">
+            "Designing with purpose. Developing with passion."
+        </p>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 light-mode:bg-gray-300 text-gray-400 light-mode:text-gray-700 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://github.com/g3org3zx/g3org3zx" target="_blank" class="hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.41 2.87 8.15 6.84 9.49.5.09.68-.22.68-.48v-1.71c-2.78.61-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.61.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.28.1-2.66 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85.004 1.71.114 2.52.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.41.1 2.66.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.56.94.56 1.89v2.8c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/george-kamande-a87a6435b" target="_blank" class="hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9.78h3.41v1.55h.05c.48-.91 1.65-1.87 3.39-1.87 3.62 0 4.29 2.38 4.29 5.48v6.51zM5.34 8.23c-1.14 0-2.06-.92-2.06-2.06 0-1.14.92-2.06 2.06-2.06 1.14 0 2.06.92 2.06 2.06 0 1.14-.92 2.06-2.06 2.06zm1.78 12.22H3.56V9.78h3.56v10.67zM22.22 0H1.78C.8 0 0 .8 0 1.78v20.44C0 23.2.8 24 1.78 24h20.44c.98 0 1.78-.8 1.78-1.78V1.78C24 .8 23.2 0 22.22 0z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/kaman_d3kii?igsh=bHVud3l1c3gxY2Zj" target="_blank" class="hover:text-dark-neon-blue light-mode:hover:text-light-neon-blue transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.21 0 3.58.01 4.85.07 1.17.06 1.81.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.35 1.06.41 2.23.06 1.27.07 1.64.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.25 1.81-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.35-2.23.41-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.06-1.81-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.35-1.06-.41-2.23-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85c.06-1.17.25-1.81.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.35 2.23-.41 1.27-.06 1.64-.07 4.85-.07zm0-2.16C8.76 0 8.37.01 7.08.07 5.8.13 4.84.32 4.02.56c-.84.25-1.55.58-2.26 1.29-.71.71-1.04 1.42-1.29 2.26-.24.82-.43 1.78-.49 3.06C.01 8.37 0 8.76 0 12s.01 3.63.07 4.92c.06 1.28.25 2.24.49 3.06.25.84.58 1.55 1.29 2.26.71.71 1.42 1.04 2.26 1.29.82.24 1.78.43 3.06.49 1.29.06 1.68.07 4.92.07s3.63-.01 4.92-.07c1.28-.06 2.24-.25 3.06-.49.84-.25 1.55-.58 2.26-1.29.71-.71 1.04-1.42 1.29-2.26.24-.82.43-1.78.49-3.06.06-1.29.07-1.68.07-4.92s-.01-3.63-.07-4.92c-.06-1.28-.25-2.24-.49-3.06-.25-.84-.58-1.55-1.29-2.26-.71-.71-1.42-1.04-2.26-1.29-.82-.24-1.78-.43-3.06-.49C15.63.01 15.24 0 12 0zM12 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zm0 10.16a4 4 0 110-8 4 4 0 010 8zm6.41-10.58a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
+                </a>
+            </div>
+            <p>© 2025 George Kamande. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-neon-blue': '#00b7eb',
+                        'dark-neon-magenta': '#e100e1',
+                        'dark-neon-lime': '#a8e000',
+                        'light-neon-blue': '#007bff',
+                        'light-neon-magenta': '#ff4d94',
+                        'light-neon-lime': '#00cc44',
+                    }
+                }
+            }
+        };
+
+        // Theme toggle functionality
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const body = document.body;
+
+        toggleButton.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+                themeText.textContent = 'Dark Mode';
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                themeIcon.innerHTML = '<path d="M12 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm0 17a1 1 0 011 1v1a1 1 0 01-2 0v-1a1 1 0 011-1zm-8.66-5.66a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zm14.31 0a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zM3 12a1 1 0 01-1-1H1a1 1 0 012 0zm19 0a1 1 0 01-1-1h-1a1 1 0 012 0zm-5.66 5.66a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zm-8.31-12a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM12 6a6 6 0 100 12 6 6 0 000-12z"/>';
+                themeText.textContent = 'Light Mode';
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade-in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(element => observer.observe(element));
+
+        // Contact form submission (client-side example)
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && message) {
+                alert('Message sent! (This is a demo alert.)');
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
+            } else {
+                alert('Please fill out all fields.');
+            }
+        });
+    </script>
+</body>
+</html>
